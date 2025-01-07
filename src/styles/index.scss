@@ -1,0 +1,10 @@
+// index.scss
+
+// use global styles and other modules
+@use "./variable";
+@use "./mixins";
+@use "./global";
+
+// Add more component-specific styles here if needed, e.g.:
+// @use './components/button';
+// @use './components/card';

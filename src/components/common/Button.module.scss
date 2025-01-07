@@ -1,0 +1,39 @@
+@use "@/styles/variable" as variables;
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: variables.spacing(sm) variables.spacing(md);
+  border: none;
+  border-radius: variables.$border-radius;
+  font-size: variables.font-size(medium);
+  font-family: variables.font(primary);
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease, filter 0.3s ease;
+
+  &.primary {
+    background-color: variables.color(primary);
+    color: variables.color(light-text);
+  }
+
+  &.secondary {
+    background-color: variables.color(secondary);
+    color: variables.color(light-text);
+  }
+
+  &.danger {
+    background-color: variables.color(error);
+    color: variables.color(light-text);
+  }
+
+  &:hover {
+    filter: brightness(0.9);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}

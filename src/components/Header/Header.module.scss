@@ -1,0 +1,51 @@
+@use "@/styles/variable" as variables;
+
+.header {
+  background-color: variables.color(primary);
+  color: variables.color(light-text);
+  padding: variables.spacing(md) 0;
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 variables.spacing(md);
+
+    .logo {
+      font-size: variables.font-size(large);
+      font-weight: bold;
+      font-family: variables.font(heading);
+
+      a {
+        color: variables.color(light-text);
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+
+    .navLinks {
+      list-style: none;
+      display: flex;
+      gap: variables.spacing(md);
+      margin: 0;
+      padding: 0;
+
+      li {
+        a {
+          color: variables.color(light-text);
+          text-decoration: none;
+          font-size: variables.font-size(medium);
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+}

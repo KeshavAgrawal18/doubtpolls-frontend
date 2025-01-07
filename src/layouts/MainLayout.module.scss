@@ -1,0 +1,34 @@
+@use "@/styles/variable" as variables;
+@use "@/styles/mixins" as mixins;
+
+.mainLayout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+  // Apply theme background and text color
+  @include mixins.theme-colors(
+    variables.color(secondary),
+    variables.color(light-text)
+  );
+}
+
+.content {
+  flex: 1;
+
+  // Apply light theme background and text color
+  @include mixins.theme-colors(
+    variables.color(light-background),
+    variables.color(light-text)
+  );
+}
+
+footer {
+  margin-top: auto;
+
+  // Apply primary theme color and text color to footer
+  @include mixins.theme-colors(
+    variables.color(primary),
+    variables.color(light-text)
+  );
+}

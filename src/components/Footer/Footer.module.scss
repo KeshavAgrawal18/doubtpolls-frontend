@@ -1,0 +1,38 @@
+.footer {
+  background-color: #333;
+  color: #fff;
+  padding: 1rem 0;
+  text-align: center;
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+
+    p {
+      margin: 0;
+      font-size: 0.9rem;
+    }
+
+    .links {
+      margin: 0.5rem 0 0;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+
+      li {
+        a {
+          color: #fff;
+          text-decoration: none;
+          font-size: 0.9rem;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+}

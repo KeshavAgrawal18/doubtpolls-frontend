@@ -1,0 +1,47 @@
+@use "@/styles/variable" as variables;
+
+.formContainer {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: variables.spacing(lg);
+  background: variables.color(light-background);
+  border-radius: variables.$border-radius;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+  h2 {
+    margin-bottom: variables.spacing(md);
+    text-align: center;
+    color: variables.color(light-text);
+    font-size: variables.font-size(large);
+    font-family: variables.font(heading);
+  }
+
+  .formGroup {
+    margin-bottom: variables.spacing(md);
+
+    label {
+      display: block;
+      margin-bottom: variables.spacing(xs);
+      font-weight: bold;
+      color: variables.color(gray-dark);
+      font-size: variables.font-size(small);
+    }
+
+    input {
+      width: 100%;
+      padding: variables.spacing(sm);
+      border: 1px solid variables.color(gray-light);
+      border-radius: variables.$border-radius;
+      font-size: variables.font-size(medium);
+      font-family: variables.font(primary);
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+
+      &:focus {
+        border-color: variables.color(primary);
+        box-shadow: 0 0 4px variables.color(primary);
+        outline: none;
+      }
+    }
+  }
+}

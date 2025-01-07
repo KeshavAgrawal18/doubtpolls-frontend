@@ -1,0 +1,74 @@
+@mixin center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin flex-container(
+  $direction: row,
+  $justify: flex-start,
+  $align: stretch,
+  $gap: 0
+) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+  gap: $gap;
+}
+
+@mixin breakpoint($size) {
+  @if map-has-key(variables.$breakpoints, $size) {
+    @media (max-width: map-get(variables.$breakpoints, $size)) {
+      @content;
+    }
+  } @else {
+    @warn "Invalid breakpoint size: #{$size}. Check variables.scss.";
+  }
+}
+
+@mixin box-shadow(
+  $color: rgba(0, 0, 0, 0.2),
+  $blur: 8px,
+  $spread: 0,
+  $x-offset: 0,
+  $y-offset: 4px
+) {
+  box-shadow: $x-offset $y-offset $blur $spread $color;
+}
+
+@mixin text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+@mixin gradient-bg($start-color, $end-color, $direction: to bottom) {
+  background: linear-gradient($direction, $start-color, $end-color);
+}
+
+@mixin grid($columns: 12, $gap: 0) {
+  display: grid;
+  grid-template-columns: repeat($columns, 1fr);
+  gap: $gap;
+}
+
+@mixin transition($properties: all, $duration: 0.3s, $easing: ease-in-out) {
+  transition: $properties $duration $easing;
+}
+
+@mixin theme-colors($background, $text) {
+  background-color: $background;
+  color: $text;
+}
