@@ -58,7 +58,20 @@ $spacing: (
 );
 
 // Border Radius
-$border-radius: 12px;
+$border-radius: (
+  sm: 4px,
+  // Subtle rounding
+  md: 8px,
+  // Default medium rounding
+  lg: 12px,
+  // Standard large rounding
+  xl: 16px,
+  // Extra large rounding
+  pill: 50px,
+  // Rounded for pill-shaped elements
+  circular: 50%,
+  // Fully circular shapes
+);
 
 // Breakpoints for Responsiveness
 $breakpoints: (
@@ -88,4 +101,8 @@ $breakpoints: (
 
 @function breakpoint($key) {
   @return map.get($breakpoints, $key);
+}
+
+@function border-radius($key) {
+  @return map.get($border-radius, $key);
 }

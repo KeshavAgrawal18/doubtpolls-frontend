@@ -21,8 +21,10 @@
       a {
         color: variables.color(light-text);
         text-decoration: none;
+        transition: color 0.3s ease, text-decoration 0.3s ease;
 
         &:hover {
+          color: variables.color(primary-light);
           text-decoration: underline;
         }
       }
@@ -36,13 +38,19 @@
       padding: 0;
 
       li {
-        a {
+        a,
+        button {
           color: variables.color(light-text);
           text-decoration: none;
           font-size: variables.font-size(medium);
+          font-family: variables.font(body);
+          background: none;
+          border: none;
+          cursor: pointer;
+          transition: color 0.3s ease;
 
           &:hover {
-            text-decoration: underline;
+            color: variables.color(primary-light);
           }
         }
       }

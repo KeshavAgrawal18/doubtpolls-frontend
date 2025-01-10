@@ -6,7 +6,7 @@
   justify-content: center;
   padding: variables.spacing(sm) variables.spacing(md);
   border: none;
-  border-radius: variables.$border-radius;
+  border-radius: variables.border-radius(lg);
   font-size: variables.font-size(medium);
   font-family: variables.font(primary);
   font-weight: 500;

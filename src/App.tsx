@@ -9,6 +9,8 @@ import Results from "./pages/Results/Results";
 import NotFound from "./pages/NotFound/NotFound";
 import MainLayout from "./layouts/MainLayout";
 import Auth from "./pages/Auth/Auth";
+import { ToastProvider } from "./contexts/ToastContext";
+import { AuthProvider } from "./contexts/AuthContext";
 
 const samplePoll = {
   title: "Favorite Programming Language",
@@ -22,27 +24,31 @@ const samplePoll = {
 const App: React.FC = () => {
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<MainLayout />}>
-          <Route index element={<Home />} />
-          <Route path="about" element={<About />} />
-          <Route path="login" element={<Auth type="login" />} />
-          <Route path="register" element={<Auth type="register" />} />
-          <Route path="profile" element={<Profile />} />
-          <Route path="polls/create" element={<CreatePoll />} />
-          <Route
-            path="polls/:id"
-            element={
-              <PollDetails
-                title={samplePoll.title}
-                options={samplePoll.options}
+      <ToastProvider>
+        <AuthProvider>
+          <Routes>
+            <Route path="/" element={<MainLayout />}>
+              <Route index element={<Home />} />
+              <Route path="about" element={<About />} />
+              <Route path="login" element={<Auth type="login" />} />
+              <Route path="register" element={<Auth type="register" />} />
+              <Route path="profile" element={<Profile />} />
+              <Route path="polls/create" element={<CreatePoll />} />
+              <Route
+                path="polls/:id"
+                element={
+                  <PollDetails
+                    title={samplePoll.title}
+                    options={samplePoll.options}
+                  />
+                }
               />
-            }
-          />
-          <Route path="results/:id" element={<Results />} />
-          <Route path="*" element={<NotFound />} />
-        </Route>
-      </Routes>
+              <Route path="results/:id" element={<Results />} />
+              <Route path="*" element={<NotFound />} />
+            </Route>
+          </Routes>
+        </AuthProvider>
+      </ToastProvider>
     </Router>
   );
 };
