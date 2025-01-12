@@ -11,29 +11,61 @@
   font-family: variables.font(primary);
   font-weight: 500;
   cursor: pointer;
-  transition: background-color 0.3s ease, filter 0.3s ease;
+  transition: background-color 0.3s ease, filter 0.3s ease, transform 0.2s ease;
+
+  &:focus {
+    outline: 2px solid variables.color(focus-outline);
+    outline-offset: 2px;
+  }
+
+  &:active {
+    transform: scale(0.97);
+  }
 
   &.primary {
     background-color: variables.color(primary);
     color: variables.color(light-text);
+
+    &:hover {
+      background-color: variables.color(primary-hover);
+      filter: brightness(1);
+    }
   }
 
   &.secondary {
     background-color: variables.color(secondary);
     color: variables.color(light-text);
+
+    &:hover {
+      background-color: variables.color(secondary-hover);
+      filter: brightness(1);
+    }
   }
 
   &.danger {
     background-color: variables.color(error);
     color: variables.color(light-text);
+
+    &:hover {
+      background-color: variables.color(error-hover);
+      filter: brightness(1);
+    }
   }
 
-  &:hover {
-    filter: brightness(0.9);
+  &.transparent {
+    background-color: transparent;
+    color: variables.color(primary);
+    font-weight: 900;
+    transition: transform 0.3s ease;
+    &:hover {
+      transform: scale(1.5);
+    }
   }
 
   &:disabled {
     cursor: not-allowed;
     opacity: 0.6;
+    background-color: variables.color(disabled-bg);
+    color: variables.color(disabled-text);
   }
 }

@@ -9,17 +9,17 @@ $colors: (
   secondary-light: #ff844c,
   secondary-dark: #b91400,
   accent: #ffca28,
-  gray-light: #f5f5f5,
+  gray-light: #c6c6c6,
   gray-medium: #9e9e9e,
   gray-dark: #424242,
   error: #e53935,
   warning: #fb8c00,
   success: #43a047,
   info: #1e88e5,
-  light-background: #f9fafb,
-  light-text: #333333,
-  dark-background: #121212,
-  dark-text: #e0e0e0,
+  light-background: #f7f7f7,
+  light-text: #f7f7f7,
+  dark-background: #2c2c2c,
+  dark-text: #0d0d0d,
 );
 
 // Font Sizes
@@ -44,8 +44,26 @@ $fonts: (
   // Serif for classic, readable headings
   heading: "Manrope, Arial, sans-serif",
   // Clean, bold look for headings
-  monospace: "Fira Code, monospace",
-  // Developer-friendly monospace font
+  monospace: "Fira Code, monospace" // Developer-friendly monospace font,,,,,,
+);
+
+// Font Weights
+$font-weights: (
+  thin: 100,
+  // Extra light and thin
+  extra-light: 200,
+  light: 300,
+  // Light text
+  regular: 400,
+  // Normal weight
+  medium: 500,
+  // Slightly bolder
+  semi-bold: 600,
+  // Emphasized text
+  bold: 700,
+  // Bold headings
+  extra-bold: 800,
+  black: 900 // Heaviest weight,,,,,,
 );
 
 // Updated Spacing
@@ -69,8 +87,7 @@ $border-radius: (
   // Extra large rounding
   pill: 50px,
   // Rounded for pill-shaped elements
-  circular: 50%,
-  // Fully circular shapes
+  circular: 50% // Fully circular shapes,,,,,,
 );
 
 // Breakpoints for Responsiveness
@@ -93,6 +110,10 @@ $breakpoints: (
 
 @function font($key) {
   @return map.get($fonts, $key);
+}
+
+@function font-weight($key) {
+  @return map.get($font-weights, $key);
 }
 
 @function spacing($key) {

@@ -6,7 +6,7 @@ import React, {
   useEffect,
 } from "react";
 import { useNavigate } from "react-router-dom";
-import { loginUser, registerUser } from "@/utils/api";
+import { loginUser, registerUser } from "@/api/authApi";
 import { useToast } from "./ToastContext";
 
 // Define the shape of the context data
@@ -19,6 +19,7 @@ interface AuthContextType {
 }
 
 interface User {
+  id?: string;
   email: string;
   password: string;
   username: string;
@@ -88,7 +89,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         showToast("Please Login to Continue", "info");
         navigate("/");
       } else {
-        showToast(response.message || "Registration failed.", "error");
+        showToast(response?.message || "Registration failed.", "error");
       }
     } catch (error) {
       handleErrors(
@@ -108,8 +109,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     try {
       const response = await loginUser(credentials);
       updateAuthState(
-        response.data?.user as User | undefined,
-        response.data?.token
+        response?.data?.user as User | undefined,
+        response?.data?.token
       );
     } catch (error) {
       handleErrors(

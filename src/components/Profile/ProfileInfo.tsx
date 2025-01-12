@@ -1,18 +1,18 @@
 import React from "react";
-import styles from "./Profile.module.scss";
+import styles from "./ProfileInfo.module.scss";
 
 interface ProfileInfoProps {
-  name: string;
-  email: string;
-  bio: string;
+  email?: string;
+  username?: string;
 }
 
-const ProfileInfo: React.FC<ProfileInfoProps> = ({ name, email, bio }) => {
+const ProfileInfo: React.FC<ProfileInfoProps> = ({ email, username }) => {
   return (
     <div className={styles.profileInfo}>
-      <h2>{name}</h2>
-      <p>Email: {email}</p>
-      <p>Bio: {bio}</p>
+      <div className={styles.profileHeader}>
+        <p className={styles.username}>Username: {username}</p>
+      </div>
+      <p className={styles.email}>Email: {email}</p>
     </div>
   );
 };

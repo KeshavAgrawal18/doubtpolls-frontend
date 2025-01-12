@@ -7,13 +7,30 @@ const LoginForm: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const { login } = useAuth();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
-    login({ email, password });
-    setIsSubmitting(false);
+
+    if (!email || !password) {
+      setErrorMessage("Email and Password are required!");
+      return;
+    }
+
+    try {
+      setErrorMessage("");
+      setIsSubmitting(true);
+      login({ email, password });
+    } catch (error) {
+      if (error instanceof Error) {
+        setErrorMessage(error.message || "Login failed. Please try again.");
+      } else {
+        setErrorMessage("Login failed. Please try again.");
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const fields: InputFieldProps[] = [
@@ -41,7 +58,7 @@ const LoginForm: React.FC = () => {
       fields={fields}
       buttonText="Login"
       isSubmitting={isSubmitting}
-      errorMessage={"null"}
+      errorMessage={errorMessage}
     />
   );
 };

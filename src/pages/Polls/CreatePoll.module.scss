@@ -1,36 +1,107 @@
+@use "@/styles/variable" as variables;
+
 .createPoll {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 2rem;
-  background-color: #f9f9f9;
-}
+  padding: variables.spacing(xl);
+  background-color: variables.color(light-background);
+  color: variables.color(dark-text);
+  font-family: variables.font(body);
 
-.createPoll__form {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  width: 100%;
-  max-width: 500px;
-}
+  h1 {
+    margin-bottom: variables.spacing(lg);
+    font-size: variables.font-size(xl);
+    font-weight: variables.font-weight(bold);
+    color: variables.color(primary);
+    text-align: center;
+  }
 
-.createPoll__input {
-  padding: 0.75rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 1rem;
-}
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: variables.spacing(md);
+    width: 100%;
+    max-width: 480px;
 
-.createPoll__button {
-  padding: 0.75rem;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  font-size: 1rem;
-  cursor: pointer;
-}
+    @media (max-width: variables.breakpoint(sm)) {
+      padding: 0 variables.spacing(sm);
+    }
+  }
 
-.createPoll__button:hover {
-  background-color: #0056b3;
+  &__input,
+  &__textarea {
+    padding: variables.spacing(md);
+    border: 1px solid variables.color(border);
+    border-radius: variables.border-radius(md);
+    font-size: variables.font-size(base);
+    background-color: variables.color(input-background);
+    transition: border-color 0.3s, background-color 0.3s;
+
+    &:focus {
+      outline: none;
+      border-color: variables.color(primary);
+      background-color: variables.color(light-background);
+    }
+
+    &::placeholder {
+      color: variables.color(placeholder);
+    }
+  }
+
+  &__textarea {
+    resize: none;
+    min-height: 100px;
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__error {
+    font-size: variables.font-size(sm);
+    color: variables.color(error);
+    font-weight: variables.font-weight(medium);
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: space-between;
+    gap: variables.spacing(sm);
+
+    .createPoll__button {
+      flex: 1;
+      padding: variables.spacing(md);
+      font-size: variables.font-size(base);
+      color: variables.color(light-text);
+      background-color: variables.color(primary);
+      border: none;
+      border-radius: variables.border-radius(md);
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.2s;
+
+      &:hover {
+        background-color: variables.color(primary-hover);
+        transform: scale(1.05);
+      }
+    }
+
+    button[type="submit"] {
+      flex: 1;
+      padding: variables.spacing(md);
+      font-size: variables.font-size(base);
+      color: variables.color(light-text);
+      background-color: variables.color(success);
+      border: none;
+      border-radius: variables.border-radius(md);
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.2s;
+
+      &:hover {
+        background-color: variables.color(success-hover);
+        transform: scale(1.05);
+      }
+    }
+  }
 }

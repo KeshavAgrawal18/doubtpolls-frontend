@@ -1,0 +1,74 @@
+@use "@/styles/variable" as variables;
+
+.inputGroup {
+  margin: variables.spacing(sm) 0;
+
+  label {
+    display: block;
+    margin-bottom: variables.spacing(xs);
+    font-weight: 600; // Ensures good visibility
+    color: variables.color(text-dark); // More specific for text
+    font-size: variables.font-size(small);
+    letter-spacing: 0.5px; // Consistent letter-spacing
+  }
+
+  input,
+  textarea {
+    width: 90%;
+    padding: variables.spacing(sm) variables.spacing(md);
+    border: 1px solid variables.color(gray-light);
+    border-radius: variables.border-radius(md); // More subtle rounding
+    font-size: variables.font-size(medium);
+    font-family: variables.font(primary);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease,
+      background-color 0.3s ease;
+    background-color: variables.color(white);
+    color: variables.color(text-dark);
+
+    &:focus {
+      border-color: variables.color(primary);
+      box-shadow: 0 0 6px variables.color(primary-light);
+      outline: none;
+      background-color: variables.color(
+        primary-lightest
+      ); // Consistent with theme
+    }
+
+    &:disabled {
+      background-color: variables.color(gray-lightest);
+      border-color: variables.color(gray-light);
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+
+    &::placeholder {
+      color: variables.color(gray);
+      font-style: italic; // Differentiates placeholder
+    }
+  }
+
+  textarea {
+    resize: vertical; // Allows resizing vertically only
+    min-height: variables.spacing(xl); // Default height for multi-line inputs
+  }
+
+  .inputFieldError {
+    border-color: variables.color(error);
+    box-shadow: 0 0 4px variables.color(error-light);
+    background-color: variables.color(error-lightest);
+
+    &:focus {
+      border-color: variables.color(error);
+      box-shadow: 0 0 6px variables.color(error-light);
+      outline: none;
+    }
+  }
+
+  .errorText {
+    margin-top: variables.spacing(xs);
+    font-size: variables.font-size(small);
+    color: variables.color(error);
+    font-weight: 500;
+    line-height: 1.4;
+  }
+}

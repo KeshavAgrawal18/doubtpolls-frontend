@@ -1,27 +1,31 @@
+@use "@/styles/variable" as variables;
+
 .pollDetails {
-  padding: 2rem;
-  background-color: #f9f9f9;
-}
+  padding: variables.spacing(xl);
+  background-color: variables.color(light-background);
 
-.pollDetails__title {
-  font-size: 2rem;
-  font-weight: bold;
-  margin-bottom: 1rem;
-}
+  &__title {
+    color: variables.color(primary);
+    font-size: variables.font-size(xl);
+    font-weight: variables.font-weight(bold);
+    margin-bottom: variables.spacing(md);
+  }
 
-.pollDetails__options {
-  list-style: none;
-  padding: 0;
-}
+  &__options {
+    list-style: none;
+    padding: 0;
+  }
 
-.pollDetails__option {
-  margin: 0.5rem 0;
-  padding: 0.75rem;
-  background-color: #007bff;
-  color: #fff;
-  border-radius: 5px;
-}
+  &__option {
+    margin: variables.spacing(sm) 0;
+    padding: variables.spacing(md);
+    background-color: variables.color(primary);
+    color: variables.color(light-text);
+    border-radius: variables.border-radius(md);
+    transition: background-color 0.3s;
 
-.pollDetails__option:hover {
-  background-color: #0056b3;
+    &:hover {
+      background-color: variables.color(primary-hover);
+    }
+  }
 }

@@ -10,12 +10,15 @@ const Header: React.FC = () => {
     <header className={styles.header}>
       <div className={styles.container}>
         <h1 className={styles.logo}>
-          <Link to="/">Online Voting System</Link>
+          <Link to="/">DoubtPolls</Link>
         </h1>
         <nav>
           <ul className={styles.navLinks}>
             {isAuthenticated ? (
               <>
+                <li>
+                  <Link to="/polls/create">Create Poll</Link>
+                </li>
                 <li>
                   <Link to="/profile">Profile</Link>
                 </li>
