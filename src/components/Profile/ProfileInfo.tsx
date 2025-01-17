@@ -9,9 +9,7 @@ interface ProfileInfoProps {
 const ProfileInfo: React.FC<ProfileInfoProps> = ({ email, username }) => {
   return (
     <div className={styles.profileInfo}>
-      <div className={styles.profileHeader}>
-        <p className={styles.username}>Username: {username}</p>
-      </div>
+      <p className={styles.username}>Username: {username}</p>
       <p className={styles.email}>Email: {email}</p>
     </div>
   );

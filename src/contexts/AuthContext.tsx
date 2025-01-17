@@ -5,7 +5,7 @@ import React, {
   ReactNode,
   useEffect,
 } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { loginUser, registerUser } from "@/api/authApi";
 import { useToast } from "./ToastContext";
 
@@ -40,6 +40,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [user, setUser] = useState<User | null>(null);
   const navigate = useNavigate();
+  const location = useLocation();
   const { showToast } = useToast();
 
   // Helper function to handle errors
@@ -78,7 +79,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     localStorage.setItem("user", JSON.stringify(loggedInUser));
     localStorage.setItem("authToken", authToken);
     showToast("Login successful!", "success");
-    navigate("/");
+
+    // Handle redirect after login
+    const redirect =
+      new URLSearchParams(location.search).get("redirect") || "/";
+    navigate(redirect, { replace: true });
   };
 
   const register = async (user: User) => {
@@ -87,7 +92,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       if (response?.success) {
         showToast("User registered successfully!", "success");
         showToast("Please Login to Continue", "info");
-        navigate("/");
+
+        // Handle redirect after registration
+        const redirect =
+          new URLSearchParams(location.search).get("redirect") || "/";
+        navigate(redirect, { replace: true });
       } else {
         showToast(response?.message || "Registration failed.", "error");
       }

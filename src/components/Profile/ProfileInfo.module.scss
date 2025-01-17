@@ -1,0 +1,9 @@
+@use "@/styles/variable" as variables;
+
+.profileInfo {
+  p {
+    margin: variables.spacing(sm);
+    font-size: variables.font-size(md);
+    color: variables.color(gray-dark);
+  }
+}

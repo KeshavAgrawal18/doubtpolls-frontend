@@ -1,0 +1,56 @@
+@use "@/styles/variable" as variables;
+
+.EditPoll {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: variables.color(light-background);
+
+  .header {
+    text-align: center;
+    font-size: variables.font-size(md);
+    font-weight: variables.font-weight(bold);
+    color: variables.color(gray-dark);
+  }
+
+  .mainContent {
+    width: 100%;
+    max-width: 600px;
+    padding: variables.spacing(md);
+    border-radius: variables.border-radius(md);
+  }
+
+  .pollForm {
+    input,
+    textarea {
+      width: 100%;
+      padding: variables.spacing(sm);
+      margin-top: variables.spacing(xs);
+      margin-bottom: variables.spacing(sm);
+      border: 1px solid variables.color(gray-light);
+      border-radius: variables.border-radius(sm);
+      font-size: variables.font-size(md);
+    }
+  }
+
+  .optionsSection {
+    margin-bottom: variables.spacing(md);
+  }
+
+  .optionInput {
+    margin-bottom: variables.spacing(sm);
+  }
+
+  .actions {
+    display: flex;
+    justify-content: space-between;
+    gap: variables.spacing(sm);
+
+    button {
+      padding: variables.spacing(sm) variables.spacing(lg);
+      border-radius: variables.border-radius(sm);
+      font-size: variables.font-size(md);
+      transition: opacity 0.3s ease;
+    }
+  }
+}

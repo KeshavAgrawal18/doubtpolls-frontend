@@ -4,10 +4,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: variables.spacing(sm) variables.spacing(md);
   border: none;
-  border-radius: variables.border-radius(lg);
-  font-size: variables.font-size(medium);
+  border-radius: variables.border-radius(sm);
   font-family: variables.font(primary);
   font-weight: 500;
   cursor: pointer;
@@ -22,13 +20,19 @@
     transform: scale(0.97);
   }
 
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+    background-color: variables.color(disabled-bg);
+    color: variables.color(disabled-text);
+  }
+
   &.primary {
     background-color: variables.color(primary);
     color: variables.color(light-text);
 
     &:hover {
-      background-color: variables.color(primary-hover);
-      filter: brightness(1);
+      background-color: variables.color(primary-light);
     }
   }
 
@@ -37,8 +41,7 @@
     color: variables.color(light-text);
 
     &:hover {
-      background-color: variables.color(secondary-hover);
-      filter: brightness(1);
+      background-color: variables.color(secondary-light);
     }
   }
 
@@ -47,8 +50,7 @@
     color: variables.color(light-text);
 
     &:hover {
-      background-color: variables.color(error-hover);
-      filter: brightness(1);
+      background-color: variables.color(secondary-light);
     }
   }
 
@@ -56,16 +58,23 @@
     background-color: transparent;
     color: variables.color(primary);
     font-weight: 900;
-    transition: transform 0.3s ease;
     &:hover {
-      transform: scale(1.5);
+      transform: scale(1.05);
     }
   }
 
-  &:disabled {
-    cursor: not-allowed;
-    opacity: 0.6;
-    background-color: variables.color(disabled-bg);
-    color: variables.color(disabled-text);
+  &.small {
+    padding: variables.spacing(xs) variables.spacing(sm);
+    font-size: variables.font-size(small);
+  }
+
+  &.medium {
+    padding: variables.spacing(sm) variables.spacing(md);
+    font-size: variables.font-size(medium);
+  }
+
+  &.large {
+    padding: variables.spacing(md) variables.spacing(lg);
+    font-size: variables.font-size(large);
   }
 }

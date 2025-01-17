@@ -1,31 +1,8 @@
 @use "@/styles/variable" as variables;
 
-.pollDetails {
-  padding: variables.spacing(xl);
-  background-color: variables.color(light-background);
-
-  &__title {
-    color: variables.color(primary);
-    font-size: variables.font-size(xl);
-    font-weight: variables.font-weight(bold);
-    margin-bottom: variables.spacing(md);
-  }
-
-  &__options {
-    list-style: none;
-    padding: 0;
-  }
-
-  &__option {
-    margin: variables.spacing(sm) 0;
-    padding: variables.spacing(md);
-    background-color: variables.color(primary);
-    color: variables.color(light-text);
-    border-radius: variables.border-radius(md);
-    transition: background-color 0.3s;
-
-    &:hover {
-      background-color: variables.color(primary-hover);
-    }
-  }
+.social_share {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin: variables.spacing(md);
 }

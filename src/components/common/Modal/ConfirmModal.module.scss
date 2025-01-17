@@ -1,0 +1,34 @@
+@use "@/styles/variable" as variables;
+
+.modalContent {
+  text-align: center;
+
+  .modalTitle {
+    font-size: variables.font-size(lg);
+    font-weight: variables.font-weight(bold);
+    margin-bottom: variables.spacing(sm);
+  }
+
+  .modalMessage {
+    font-size: variables.font-size(md);
+    margin-bottom: variables.spacing(md);
+    color: variables.color(gray-medium);
+  }
+
+  .modalActions {
+    display: flex;
+    justify-content: space-evenly;
+    gap: variables.spacing(sm);
+
+    button {
+      border-radius: variables.border-radius(sm);
+
+      &.cancelButton {
+        background-color: variables.color(gray-light);
+        &:hover {
+          background-color: variables.color(gray-medium);
+        }
+      }
+    }
+  }
+}

@@ -1,6 +1,6 @@
 @use "@/styles/variable" as variables;
 
-.pollCard {
+.card {
   background-color: variables.color(lightest-background);
   border: 1px solid variables.color(gray-light);
   border-radius: variables.border-radius(md);
@@ -10,7 +10,6 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  transition: box-shadow 0.3s ease, transform 0.3s ease;
 
   &:hover {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -22,7 +21,7 @@
     align-items: center;
 
     .title {
-      font-size: variables.font-size(lg);
+      font-size: variables.font-size(md);
       font-weight: bold;
       margin: 0;
       color: variables.color(gray-dark);
@@ -31,7 +30,7 @@
 
   .description {
     margin: variables.spacing(sm) 0;
-    font-size: variables.font-size(md);
+    font-size: variables.font-size(sm);
     color: variables.color(gray-medium);
     line-height: 1.5;
   }
@@ -40,5 +39,11 @@
     display: flex;
     gap: variables.spacing(sm);
     font-size: variables.font-size(md);
+
+    button {
+      padding: variables.spacing(xs) variables.spacing(sm);
+      border-radius: variables.border-radius(sm);
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
   }
 }

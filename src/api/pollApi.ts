@@ -54,7 +54,6 @@ export const createPoll = async (
       "POST",
       updatedPollDetails
     );
-    console.log(response);
     return response;
   } catch (error) {
     handleError(error as Error);

@@ -1,0 +1,22 @@
+@use "sass:map";
+@use "@/styles/variable" as variables;
+
+.voteList {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: variables.spacing(md);
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.loadingMessage {
+  text-align: center;
+  font-size: variables.font-size(lg);
+  color: variables.color(gray-light);
+  padding: variables.spacing(lg) 0;
+}
+
+.noVotesMessage {
+  font-size: variables.font-size(md);
+  color: variables.color(gray-light);
+}

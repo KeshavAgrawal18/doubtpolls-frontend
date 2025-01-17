@@ -3,8 +3,9 @@
 .formContainer {
   width: 100%;
   max-width: 400px;
-  background: variables.color(light-background);
   border-radius: variables.border-radius(lg);
+  display: flex;
+  flex-direction: column;
 
   h2 {
     margin-bottom: variables.spacing(md);
@@ -12,5 +13,14 @@
     color: variables.color(light-text);
     font-size: variables.font-size(large);
     font-family: variables.font(heading);
+  }
+
+  .errorMessage {
+    color: variables.color(error);
+    font-size: variables.font-size(sm);
+  }
+
+  button {
+    margin-top: variables.spacing(md);
   }
 }

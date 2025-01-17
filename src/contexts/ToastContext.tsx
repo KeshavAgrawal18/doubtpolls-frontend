@@ -85,7 +85,7 @@ export const ToastProvider = ({ children }: { children: ReactNode }) => {
         closeButton={false}
         rtl={false}
         theme="dark"
-        limit={1.5}
+        limit={2}
       />
     </ToastContext.Provider>
   );

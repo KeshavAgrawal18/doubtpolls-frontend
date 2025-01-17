@@ -3,16 +3,18 @@ import styles from "./Button.module.scss";
 
 interface ButtonProps {
   type?: "button" | "submit" | "reset";
-  variant?: "primary" | "secondary" | "danger" | "transparent"; // Added "transparent"
+  variant?: "primary" | "secondary" | "danger" | "transparent";
+  size?: "small" | "medium" | "large";
   className?: string;
   disabled?: boolean;
-  onClick?: () => void;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   children: React.ReactNode;
 }
 
 const Button: React.FC<ButtonProps> = ({
   type = "button",
   variant = "primary",
+  size = "medium",
   disabled = false,
   className,
   onClick,
@@ -21,7 +23,7 @@ const Button: React.FC<ButtonProps> = ({
   return (
     <button
       type={type}
-      className={`${styles.button} ${styles[variant]} ${className}`}
+      className={`${styles.button} ${styles[variant]} ${styles[size]} ${className}`}
       disabled={disabled}
       onClick={onClick}
     >

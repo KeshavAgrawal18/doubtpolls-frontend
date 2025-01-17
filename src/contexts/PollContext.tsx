@@ -5,7 +5,12 @@ import React, {
   useEffect,
   ReactNode,
 } from "react";
-import { createPoll, fetchPollsByUser } from "@/api/pollApi";
+import {
+  createPoll,
+  fetchPollsByUser,
+  deletePoll as apiDeletePoll,
+  updatePoll as apiUpdatePoll,
+} from "@/api/pollApi";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/contexts/ToastContext";
 
@@ -26,6 +31,7 @@ interface PollContextProps {
   }) => Promise<void>;
   updatePollVotes: (pollId: string, optionId: string) => void;
   deletePoll: (pollId: string) => Promise<void>;
+  updatePoll: (pollId: string, updatedPoll: Partial<Poll>) => Promise<void>;
 }
 
 const PollContext = createContext<PollContextProps | undefined>(undefined);
@@ -38,7 +44,6 @@ export const PollProvider: React.FC<{ children: ReactNode }> = ({
   const { showToast } = useToast();
   const { user } = useAuth();
 
-  // Helper to ensure user authentication
   const ensureAuthenticated = () => {
     if (!user?.id) {
       return false;
@@ -46,25 +51,24 @@ export const PollProvider: React.FC<{ children: ReactNode }> = ({
     return true;
   };
 
-  // Fetch user-specific polls
+  const fetchUserPolls = async () => {
+    setIsLoading(true);
+    try {
+      const response = await fetchPollsByUser();
+      setPolls(response?.data || []);
+    } catch (error) {
+      console.error("Error fetching user polls:", error);
+      showToast("Failed to load polls. Please try again.", "error");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
     if (!ensureAuthenticated()) return;
 
-    const fetchUserPolls = async () => {
-      setIsLoading(true);
-      try {
-        const response = await fetchPollsByUser();
-        setPolls(response?.data || []);
-      } catch (error) {
-        console.error("Error fetching user polls:", error);
-        showToast("Failed to load polls. Please try again.", "error");
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
     fetchUserPolls();
-  }, [user, showToast]);
+  }, [user]);
 
   // Add a new poll
   const addPoll = async (poll: {
@@ -91,7 +95,6 @@ export const PollProvider: React.FC<{ children: ReactNode }> = ({
     }
   };
 
-  // Update poll votes
   const updatePollVotes = (pollId: string, optionId: string) => {
     if (!ensureAuthenticated()) return;
 
@@ -99,13 +102,13 @@ export const PollProvider: React.FC<{ children: ReactNode }> = ({
     showToast("Vote recorded successfully!", "info");
   };
 
-  // Delete a poll
   const deletePoll = async (pollId: string) => {
     if (!ensureAuthenticated()) return;
 
     setIsLoading(true);
     try {
       setPolls((prevPolls) => prevPolls.filter((poll) => poll.id !== pollId));
+      apiDeletePoll(pollId);
       showToast("Poll deleted successfully.", "success");
     } catch (error) {
       console.error("Error deleting poll:", error);
@@ -115,9 +118,35 @@ export const PollProvider: React.FC<{ children: ReactNode }> = ({
     }
   };
 
+  const updatePoll = async (pollId: string, updatedPoll: Partial<Poll>) => {
+    if (!ensureAuthenticated()) return;
+    setIsLoading(true);
+    try {
+      const response = await apiUpdatePoll(pollId, updatedPoll);
+
+      if (response?.success) {
+        showToast("Poll updated successfully!", "success");
+      } else {
+        showToast("Failed to update poll. Please try again.", "error");
+      }
+    } catch (error) {
+      console.error("Error updating poll:", error);
+      showToast("Failed to update poll. Please try again.", "error");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <PollContext.Provider
-      value={{ polls, isLoading, addPoll, updatePollVotes, deletePoll }}
+      value={{
+        polls,
+        isLoading,
+        addPoll,
+        updatePollVotes,
+        deletePoll,
+        updatePoll,
+      }}
     >
       {children}
     </PollContext.Provider>

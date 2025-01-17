@@ -5,6 +5,7 @@ export interface InputFieldProps {
   id?: string;
   label?: string;
   type?: string;
+  name?: string;
   value: string;
   onChange: (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -21,6 +22,7 @@ const InputField: React.FC<InputFieldProps> = ({
   id,
   label,
   type = "text",
+  name,
   value,
   onChange,
   placeholder,
@@ -39,6 +41,7 @@ const InputField: React.FC<InputFieldProps> = ({
       <textarea
         id={id}
         value={value}
+        name={name}
         onChange={onChange}
         placeholder={placeholder}
         required={required}
@@ -52,6 +55,7 @@ const InputField: React.FC<InputFieldProps> = ({
       <input
         type={type}
         id={id}
+        name={name}
         value={value}
         onChange={onChange}
         placeholder={placeholder}

@@ -15,8 +15,10 @@ $colors: (
   error: #e53935,
   warning: #fb8c00,
   success: #43a047,
+  success-hover: #2e7d32,
   info: #1e88e5,
   light-background: #f7f7f7,
+  lightest-background: #fff,
   light-text: #f7f7f7,
   dark-background: #2c2c2c,
   dark-text: #0d0d0d,
@@ -26,11 +28,11 @@ $colors: (
 $font-sizes: (
   xl: 2rem,
   // Large headings
-  large: 1.5rem,
+  lg: 1.5rem,
   // Main headings
-  medium: 1rem,
+  md: 1rem,
   // Body text
-  small: 0.875rem,
+  sm: 0.875rem,
   // Secondary text
   xs: 0.75rem,
   // Captions and small labels
@@ -44,7 +46,8 @@ $fonts: (
   // Serif for classic, readable headings
   heading: "Manrope, Arial, sans-serif",
   // Clean, bold look for headings
-  monospace: "Fira Code, monospace" // Developer-friendly monospace font,,,,,,
+  monospace: "Fira Code, monospace",
+  // Developer-friendly monospace font
 );
 
 // Font Weights
@@ -63,7 +66,8 @@ $font-weights: (
   bold: 700,
   // Bold headings
   extra-bold: 800,
-  black: 900 // Heaviest weight,,,,,,
+  black: 900,
+  // Heaviest weight
 );
 
 // Updated Spacing
@@ -87,7 +91,8 @@ $border-radius: (
   // Extra large rounding
   pill: 50px,
   // Rounded for pill-shaped elements
-  circular: 50% // Fully circular shapes,,,,,,
+  circular: 50%
+    // Fully circular shapes,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 );
 
 // Breakpoints for Responsiveness

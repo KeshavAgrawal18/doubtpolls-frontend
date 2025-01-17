@@ -1,67 +1,61 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import styles from "./PollDetails.module.scss";
-import { fetchPollById } from "@/api/pollApi";
 import PollDetailsCard from "@/components/Poll/PollDetailsCard";
-
-interface PollDetailsOption {
-  id: string;
-  label: string;
-}
-
-interface PollData {
-  title?: string;
-  options?: PollDetailsOption[];
-  description?: string;
-}
+import SocialMediaShare from "@/components/common/SocialMediaShare";
+import { useToast } from "@/contexts/ToastContext";
+import { useVotes } from "@/contexts/VotesContext";
+import { castVote } from "@/api/votesApi";
+import useFetchPoll from "@/hooks/useFetchPoll";
 
 const PollDetails: React.FC = () => {
-  // Extract `id` from the route parameters
   const { id } = useParams<{ id: string }>();
+  const { showToast } = useToast();
+  const { votes } = useVotes();
 
-  // State to manage poll details
-  const [poll, setPoll] = useState<PollData | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const { poll, isLoading, error, refetch } = useFetchPoll(id);
+  const [hasVoted, setHasVoted] = useState<boolean>(
+    votes.some((vote) => vote.pollId === id)
+  );
 
-  useEffect(() => {
-    const fetchPoll = async () => {
-      if (!id) return; // Ensure `id` exists
-      setIsLoading(true);
-      setError(null);
-      try {
-        const response = await fetchPollById(id); // Fetch poll details
-        if (!response?.data) throw Error;
-        setPoll(response.data);
-      } catch (err) {
-        setError("Failed to fetch poll details. Please try again.");
-      } finally {
-        setIsLoading(false);
-      }
-    };
+  const handleVote = async (optionId: string) => {
+    if (!id || hasVoted) return;
 
-    fetchPoll();
-  }, [id]);
+    try {
+      await castVote(id, optionId);
+      setHasVoted(true);
+      showToast(
+        "Vote successfully cast! Thank you for your response.",
+        "success"
+      );
+      refetch();
+    } catch (err: any) {
+      const errorMessage =
+        err.message === "User has already voted in this poll"
+          ? "You have already voted in this poll."
+          : "Failed to cast vote. Please try again.";
+      showToast(errorMessage, "error");
+    }
+  };
 
-  // Render loading state
-  if (isLoading) {
-    return <div className={styles.poll}>Loading...</div>;
-  }
+  if (isLoading) return <div className={styles.poll}>Loading...</div>;
+  if (error) return <div className={styles.poll}>{error}</div>;
 
-  // Render error state
-  if (error) {
-    return <div className={styles.poll}>{error}</div>;
-  }
-
-  // Render poll details
-  console.log({ poll });
+  const shareUrl = `${window.location.origin}/polls/${id}`;
 
   return (
-    <PollDetailsCard
-      title={poll?.title}
-      description={poll?.description}
-      options={poll?.options}
-    />
+    <div className={styles.poll}>
+      <PollDetailsCard
+        title={poll?.title}
+        description={poll?.description}
+        options={poll?.options}
+        onVote={handleVote}
+        isVotingDisabled={hasVoted}
+      />
+      <div className={styles.social_share}>
+        <SocialMediaShare url={shareUrl} message="Check out this poll!" />
+      </div>
+    </div>
   );
 };
 

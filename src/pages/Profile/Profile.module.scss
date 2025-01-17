@@ -1,29 +1,32 @@
 @use "@/styles/variable" as variables;
 
 .profileContainer {
-  padding: variables.spacing(lg);
+  padding: variables.spacing(xl);
   background-color: variables.color(light-background);
   color: variables.color(dark-text);
-  border-radius: variables.border-radius(md);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   font-family: variables.font(body);
 
   .title {
     font-size: variables.font-size(xl);
-    margin-bottom: variables.spacing(md);
+    margin-bottom: variables.spacing(lg);
     color: variables.color(primary);
+    text-align: center;
+    font-weight: bold;
   }
 
   .description {
     font-size: variables.font-size(md);
     color: variables.color(dark-text);
+    margin-bottom: variables.spacing(md);
+    text-align: center;
+    line-height: 1.6;
   }
 }
 
 .pollsGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: variables.spacing(sm);
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: variables.spacing(md);
 
   @media (max-width: variables.breakpoint(sm)) {
     grid-template-columns: 1fr;
