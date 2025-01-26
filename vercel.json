@@ -1,0 +1,28 @@
+{
+  "rewrites": [
+    {
+      "source": "/profile",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/polls/create",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/polls/:id",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/polls/:pollId/edit",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/results/:pollId",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
