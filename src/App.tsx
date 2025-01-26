@@ -1,7 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home/Home";
-import About from "./pages/About/About";
 import Profile from "./pages/Profile/Profile";
 import PollDetails from "./pages/Polls/PollDetails";
 import CreatePoll from "./pages/Polls/CreatePoll";
@@ -26,7 +25,6 @@ const App: React.FC = () => {
               <Routes>
                 <Route path="/" element={<MainLayout />}>
                   <Route index element={<Home />} />
-                  <Route path="about" element={<About />} />
                   <Route path="login" element={<Auth type="login" />} />
                   <Route path="register" element={<Auth type="register" />} />
 
