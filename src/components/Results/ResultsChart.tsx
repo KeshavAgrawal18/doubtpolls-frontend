@@ -50,7 +50,7 @@ const ResultsChart: React.FC<ResultsChartProps> = ({ title, options }) => {
               `${name}: ${((votes / totalVotes) * 100).toFixed(1)}%`
             }
           >
-            {options.map((entry, index) => (
+            {options.map((_, index) => (
               <Cell
                 key={`cell-${index}`}
                 fill={COLORS[index % COLORS.length]}
