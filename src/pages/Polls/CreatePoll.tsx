@@ -1,9 +1,13 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
-import styles from "./CreatePoll.module.scss";
-import Button from "@/components/common/Button";
+import { useNavigate } from "react-router-dom";
 import { usePoll } from "@/contexts/PollContext";
 import Option from "@/components/Poll/Option";
+
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import { Plus, Loader2 } from "lucide-react";
 
 const CreatePoll: React.FC = () => {
   const [formState, setFormState] = useState({
@@ -11,133 +15,206 @@ const CreatePoll: React.FC = () => {
     description: "",
     options: [""],
   });
-  const [errors, setErrors] = useState({ title: "", options: "" });
 
-  const { addPoll, isLoading } = usePoll(); // Access isLoading state from context
+  const { addPoll, isLoading } = usePoll();
   const navigate = useNavigate();
 
   const handleInputChange = (
     field: string,
     value: string | string[],
-    index?: number
+    index?: number,
   ) => {
-    setFormState((prevState) => {
+    setFormState((prev) => {
       if (field === "options" && index !== undefined) {
-        const updatedOptions = [...prevState.options];
-        updatedOptions[index] = value as string;
-        return { ...prevState, options: updatedOptions };
+        const updated = [...prev.options];
+        updated[index] = value as string;
+        return { ...prev, options: updated };
       }
-      return { ...prevState, [field]: value };
+      return { ...prev, [field]: value };
     });
-    setErrors((prevErrors) => ({ ...prevErrors, [field]: "" })); // Clear errors on change
   };
 
   const modifyOptions = (action: "add" | "delete", index?: number) => {
-    setFormState((prevState) => {
-      const updatedOptions =
+    setFormState((prev) => {
+      const updated =
         action === "add"
-          ? [...prevState.options, ""]
-          : prevState.options.filter((_, i) => i !== index);
+          ? [...prev.options, ""]
+          : prev.options.filter((_, i) => i !== index);
 
-      return { ...prevState, options: updatedOptions };
+      return { ...prev, options: updated };
     });
   };
 
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-    const filteredOptions = formState.options.filter(
-      (opt) => opt.trim() !== ""
-    );
-    const { title, description } = formState;
+    const filtered = formState.options.filter((o) => o.trim() !== "");
 
-    // Validate form fields
-    const newErrors = {
-      title: !title.trim() ? "Poll title is required." : "",
-      options:
-        filteredOptions.length < 2
-          ? "Please provide at least two valid options."
-          : "",
-    };
+    // minimal guard (no strict UX blocking)
+    if (!formState.title.trim() || filtered.length === 0) return;
 
-    if (newErrors.title || newErrors.options) {
-      setErrors(newErrors);
-      return;
-    }
+    // ✅ KEEP ORIGINAL LOGIC (string[])
+    await addPoll({
+      title: formState.title,
+      description: formState.description,
+      options: filtered,
+    });
 
-    try {
-      await addPoll({ title, description, options: filteredOptions });
-      navigate("/");
-    } catch (error) {
-      console.error("Error creating poll:", error);
-    }
+    navigate("/");
   };
 
-  const { title, description, options } = formState;
-
   return (
-    <div className={styles.createPoll}>
-      <h1>Create a New Poll</h1>
-      <form className={styles.createPoll__form} onSubmit={handleSubmit}>
-        {/* Title Input */}
-        <div className={styles.createPoll__field}>
-          <input
-            className={styles.createPoll__input}
-            type="text"
-            placeholder="Poll Title"
-            value={title}
-            onChange={(e) => handleInputChange("title", e.target.value)}
-            disabled={isLoading} // Disable input during loading
-          />
-          {errors.title && (
-            <p className={styles.createPoll__error}>{errors.title}</p>
-          )}
-        </div>
+    <div className="min-h-screen bg-neutral-50 px-4 py-10">
+      <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-8">
+        {/* LEFT: FORM */}
+        <Card className="rounded-2xl shadow-sm border-neutral-200">
+          <CardHeader>
+            <CardTitle className="text-2xl font-semibold">
+              Create a Decision
+            </CardTitle>
+            <p className="text-sm text-muted-foreground">
+              Frame a decision and gather input from your team
+            </p>
+          </CardHeader>
 
-        {/* Description Input */}
-        <div className={styles.createPoll__field}>
-          <textarea
-            className={styles.createPoll__textarea}
-            placeholder="Poll Description (optional)"
-            value={description}
-            onChange={(e) => handleInputChange("description", e.target.value)}
-            disabled={isLoading} // Disable textarea during loading
-          />
-        </div>
+          <CardContent>
+            <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Title */}
+              <Input
+                placeholder="e.g. Which database should we use for MVP?"
+                value={formState.title}
+                onChange={(e) => handleInputChange("title", e.target.value)}
+                disabled={isLoading}
+              />
 
-        {/* Options */}
-        {options.map((option, index) => (
-          <Option
-            key={index}
-            value={option}
-            index={index}
-            onChange={(index, value) =>
-              handleInputChange("options", value, index)
-            }
-            onDelete={(index) => modifyOptions("delete", index)}
-            canDelete={options.length > 1}
-            isDisabled={isLoading} // Disable option inputs during loading
-          />
-        ))}
-        {errors.options && (
-          <p className={styles.createPoll__error}>{errors.options}</p>
-        )}
+              {/* Description */}
+              <Textarea
+                placeholder="Add context to help your team decide (optional)"
+                value={formState.description}
+                onChange={(e) =>
+                  handleInputChange("description", e.target.value)
+                }
+                disabled={isLoading}
+                className="resize-none"
+              />
 
-        {/* Actions */}
-        <div className={styles.createPoll__actions}>
-          <Button
-            className={styles.createPoll__button}
-            onClick={() => modifyOptions("add")}
-            disabled={isLoading} // Disable Add Option button during loading
-          >
-            Add Option
-          </Button>
-          <Button type="submit" disabled={isLoading}>
-            {isLoading ? "Creating..." : "Create Poll"}{" "}
-            {/* Show spinner or text */}
-          </Button>
+              {/* Options */}
+              <div className="space-y-3">
+                <p className="text-sm font-medium text-muted-foreground">
+                  Options
+                </p>
+
+                {formState.options.map((option, index) => {
+                  const isDuplicate =
+                    formState.options.filter(
+                      (o) =>
+                        o.trim().toLowerCase() === option.trim().toLowerCase(),
+                    ).length > 1;
+
+                  return (
+                    <Option
+                      key={index}
+                      value={option}
+                      index={index}
+                      onChange={(i, value) =>
+                        handleInputChange("options", value, i)
+                      }
+                      onDelete={(i) => modifyOptions("delete", i)}
+                      canDelete={formState.options.length > 1}
+                      isDisabled={isLoading}
+                    />
+                  );
+                })}
+
+                {/* Soft guidance */}
+                {formState.options.length < 2 && (
+                  <p className="text-xs text-amber-500">
+                    Add at least 2 options to compare outcomes
+                  </p>
+                )}
+
+                <p className="text-xs text-muted-foreground">
+                  Clear and distinct options lead to better decisions
+                </p>
+
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => modifyOptions("add")}
+                  disabled={isLoading}
+                  className="w-full"
+                >
+                  <Plus className="w-4 h-4 mr-2" />
+                  Add Option
+                </Button>
+              </div>
+
+              {/* Submit */}
+              <Button
+                type="submit"
+                className="w-full shadow-sm hover:shadow-md transition"
+                disabled={isLoading}
+              >
+                {isLoading && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
+                Start Decision
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
+
+        {/* RIGHT: PREVIEW */}
+        <div className="space-y-6">
+          <Card className="rounded-2xl border-neutral-200">
+            <CardHeader>
+              <CardTitle className="text-lg">Preview</CardTitle>
+            </CardHeader>
+
+            <CardContent className="space-y-4">
+              <p className="font-medium">
+                {formState.title || "Your decision will appear here"}
+              </p>
+
+              {formState.description && (
+                <p className="text-sm text-muted-foreground">
+                  {formState.description}
+                </p>
+              )}
+
+              <div className="space-y-2">
+                {formState.options
+                  .filter((o) => o.trim() !== "")
+                  .map((opt, i) => (
+                    <div
+                      key={i}
+                      className="border rounded-lg px-3 py-2 text-sm bg-muted/40 hover:bg-muted transition cursor-pointer"
+                    >
+                      {opt}
+                    </div>
+                  ))}
+
+                {formState.options.filter((o) => o.trim() !== "").length ===
+                  0 && (
+                  <p className="text-sm text-muted-foreground">
+                    Add options to shape the decision
+                  </p>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Tips */}
+          <Card className="rounded-2xl border-neutral-200">
+            <CardContent className="p-4 space-y-2 text-sm text-muted-foreground">
+              <p className="font-medium text-foreground">Tips</p>
+              <ul className="space-y-1 list-disc ml-4">
+                <li>Keep your question clear and specific</li>
+                <li>Limit options to 2–5 choices</li>
+                <li>Avoid overlapping answers</li>
+              </ul>
+            </CardContent>
+          </Card>
         </div>
-      </form>
+      </div>
     </div>
   );
 };
