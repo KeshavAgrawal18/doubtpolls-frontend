@@ -1,5 +1,12 @@
 import { getVotesByUser } from "@/api/votesApi";
-import { createContext, useContext, useState, useEffect } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface Vote {
   id: string;
@@ -15,42 +22,50 @@ interface VotesContextValue {
 
 const VotesContext = createContext<VotesContextValue | undefined>(undefined);
 
-export const VotesProvider: React.FC<{ children: React.ReactNode }> = ({
+export const VotesProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
+  const { user } = useAuth();
+
   const [votes, setVotes] = useState<Vote[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Fetch votes from the API
+    // If user not logged in → don’t call API
+    if (!user) {
+      setVotes([]);
+      setIsLoading(false);
+      return;
+    }
+
     const fetchVotes = async () => {
       try {
-        const response = await getVotesByUser();
+        const res = await getVotesByUser();
+        const data = res?.data ?? [];
 
-        const data = response?.data;
-        if (!data) return [];
-        const mappedVotes = data.map((item: any) => {
-          const selectedOption = item.poll.options.find(
-            (option: any) => option.id === item.optionId
+        const mapped: Vote[] = data.map((item: any) => {
+          const option = item.poll?.options?.find(
+            (o: any) => o.id === item.optionId,
           );
 
           return {
             id: item.id,
-            pollTitle: item.poll.title,
+            pollTitle: item.poll?.title ?? "",
             pollId: item.pollId,
-            choice: selectedOption ? selectedOption.label : "Unknown Choice", // Use the label or fallback
+            choice: option?.label ?? "Unknown",
           };
         });
-        setVotes(mappedVotes);
-      } catch (error) {
-        console.error("Error fetching votes:", error);
+
+        setVotes(mapped);
+      } catch (err) {
+        console.error("Failed to fetch votes", err);
       } finally {
         setIsLoading(false);
       }
     };
 
     fetchVotes();
-  }, []);
+  }, [user]);
 
   return (
     <VotesContext.Provider value={{ votes, isLoading }}>
