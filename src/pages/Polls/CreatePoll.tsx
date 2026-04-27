@@ -122,6 +122,11 @@ const CreatePoll: React.FC = () => {
                       onDelete={(i) => modifyOptions("delete", i)}
                       canDelete={formState.options.length > 1}
                       isDisabled={isLoading}
+                      className={`${
+                        isDuplicate
+                          ? "border-red-500 focus-visible:ring-red-500"
+                          : ""
+                      }`}
                     />
                   );
                 })}

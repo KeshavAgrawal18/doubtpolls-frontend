@@ -1,7 +1,7 @@
 import React from "react";
-import Button from "@/components/common/Button";
-import styles from "./Option.module.scss";
-import InputField from "../common/InputField";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { X } from "lucide-react";
 
 interface OptionProps {
   value: string;
@@ -10,6 +10,7 @@ interface OptionProps {
   onDelete: (index: number) => void;
   canDelete: boolean;
   isDisabled?: boolean;
+  className?: string;
 }
 
 const Option: React.FC<OptionProps> = ({
@@ -19,23 +20,39 @@ const Option: React.FC<OptionProps> = ({
   onDelete,
   canDelete,
   isDisabled,
+  className = "",
 }) => {
   return (
-    <div className={styles.optionRow}>
-      <InputField
-        className={styles.optionInput}
+    <div className="flex items-center gap-2 group">
+      {/* Input */}
+      <Input
         type="text"
-        placeholder={`Option ${index + 1}`}
         value={value}
+        placeholder={`Option ${index + 1}`}
+        disabled={isDisabled}
         onChange={(e) => onChange(index, e.target.value)}
+        className={`
+          flex-1 rounded-xl border transition
+          focus-visible:ring-1 focus-visible:ring-neutral-400
+          ${isDisabled ? "opacity-60 cursor-not-allowed" : ""}
+          ${className}
+        `}
       />
+
+      {/* Delete */}
       {canDelete && (
         <Button
-          variant="transparent"
+          type="button"
+          variant="ghost"
+          size="icon"
           onClick={() => onDelete(index)}
           disabled={isDisabled}
+          className="
+            opacity-0 group-hover:opacity-100
+            transition
+          "
         >
-          ✖
+          <X className="w-4 h-4 text-neutral-400 hover:text-red-500" />
         </Button>
       )}
     </div>

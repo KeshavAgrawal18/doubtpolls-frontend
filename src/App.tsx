@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
 import Home from "./pages/Home/Home";
 import Profile from "./pages/Profile/Profile";
 import PollDetails from "./pages/Polls/PollDetails";
@@ -9,6 +10,7 @@ import Results from "./pages/Results/Results";
 import NotFound from "./pages/NotFound/NotFound";
 import MainLayout from "./layouts/MainLayout";
 import Auth from "./pages/Auth/Auth";
+
 import { ToastProvider } from "./contexts/ToastContext";
 import { AuthProvider } from "./contexts/AuthContext";
 import { PollProvider } from "./contexts/PollContext";
@@ -24,18 +26,22 @@ const App: React.FC = () => {
             <PollProvider>
               <Routes>
                 <Route path="/" element={<MainLayout />}>
+                  {/* Public */}
                   <Route index element={<Home />} />
                   <Route path="login" element={<Auth type="login" />} />
                   <Route path="register" element={<Auth type="register" />} />
 
+                  {/* Protected */}
                   <Route element={<PrivateRoutes />}>
                     <Route path="profile" element={<Profile />} />
+
                     <Route path="polls/create" element={<CreatePoll />} />
                     <Route path="polls/:id" element={<PollDetails />} />
-                    <Route path="polls/:pollId/edit" element={<EditPoll />} />
-                    <Route path="results/:pollId" element={<Results />} />
+                    <Route path="polls/:id/edit" element={<EditPoll />} />
+                    <Route path="polls/:id/results" element={<Results />} />
                   </Route>
 
+                  {/* 404 */}
                   <Route path="*" element={<NotFound />} />
                 </Route>
               </Routes>
