@@ -1,8 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import Card from "../common/Card";
-import Button from "../common/Button";
-import styles from "./VotesList.module.scss";
+
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 interface Vote {
   id: string;
@@ -19,48 +19,58 @@ interface VotesListProps {
 const VotesList: React.FC<VotesListProps> = ({ votes, isLoading }) => {
   const navigate = useNavigate();
 
-  const handleNavigate = (pollId: string) => {
-    navigate(`/polls/${pollId}`);
-  };
-
-  const handleViewResults = (pollId: string) => {
-    navigate(`/results/${pollId}`);
-  };
-
   if (isLoading) {
-    return <p className={styles.loadingMessage}>Loading your votes...</p>;
+    return (
+      <p className="text-sm text-muted-foreground">Loading your votes...</p>
+    );
   }
 
   if (votes.length === 0) {
     return (
-      <p className={styles.noVotesMessage}>
-        You have not voted on any polls yet.
-      </p>
+      <div className="text-center py-10">
+        <p className="text-muted-foreground">
+          You haven’t voted on any decisions yet
+        </p>
+      </div>
     );
   }
 
   return (
-    <ul className={styles.voteList}>
+    <div className="space-y-4">
       {votes.map((vote) => (
         <Card
-          id={vote.pollId}
-          title={`Poll: ${vote.pollTitle}`}
-          description={`My Choice: ${vote.choice}`}
-          onClick={handleNavigate}
-          actions={
+          key={vote.id}
+          className="rounded-2xl cursor-pointer hover:shadow-md transition-all border"
+          onClick={() => navigate(`/polls/${vote.pollId}`)}
+        >
+          <CardHeader className="pb-2">
+            <CardTitle className="text-base font-semibold">
+              {vote.pollTitle}
+            </CardTitle>
+          </CardHeader>
+
+          <CardContent className="flex items-center justify-between">
+            {/* Left Info */}
+            <div className="space-y-1">
+              <p className="text-sm text-muted-foreground">Your choice</p>
+              <p className="font-medium">{vote.choice}</p>
+            </div>
+
+            {/* Actions */}
             <Button
-              size="small"
+              size="sm"
+              variant="outline"
               onClick={(e) => {
                 e.stopPropagation();
-                handleViewResults(vote.pollId);
+                navigate(`/polls/${vote.pollId}/results`);
               }}
             >
               View Results
             </Button>
-          }
-        />
+          </CardContent>
+        </Card>
       ))}
-    </ul>
+    </div>
   );
 };
 
