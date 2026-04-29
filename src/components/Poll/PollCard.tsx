@@ -25,7 +25,7 @@ const PollCard: React.FC<PollCardProps> = ({
 
   return (
     <Card
-      onClick={() => navigate(`/polls/${id}`)}
+      onClick={() => navigate(`/decisions/${id}`)}
       className="cursor-pointer rounded-2xl border-neutral-200 shadow-sm hover:shadow-md transition p-5"
     >
       {/* Header */}

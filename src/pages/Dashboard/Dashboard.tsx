@@ -15,7 +15,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { usePoll } from "@/contexts/PollContext";
 import { useVotes } from "@/contexts/VotesContext";
 
-const Profile: React.FC = () => {
+const Dashboard: React.FC = () => {
   const { user } = useAuth();
   const { polls, isLoading: pollsLoading, deletePoll } = usePoll();
   const { votes, isLoading: votesLoading } = useVotes();
@@ -66,8 +66,8 @@ const Profile: React.FC = () => {
                 key={p.id}
                 title={p.title}
                 description={p.description ?? ""}
-                onVote={() => navigate(`/polls/${p.id}`)}
-                onView={() => navigate(`/polls/${p.id}/results`)}
+                onVote={() => navigate(`/decisions/${p.id}`)}
+                onView={() => navigate(`/decisions/${p.id}/results`)}
               />
             ))}
           </div>
@@ -103,7 +103,7 @@ const Profile: React.FC = () => {
       <SectionWrapper
         title="Your Decisions"
         action={
-          <Button size="sm" onClick={() => navigate("/polls/create")}>
+          <Button size="sm" onClick={() => navigate("/decisions/create")}>
             New Decision
           </Button>
         }
@@ -115,7 +115,10 @@ const Profile: React.FC = () => {
         {!pollsLoading && !polls.length && (
           <div className="text-center py-10">
             <p className="text-muted-foreground">No decisions yet</p>
-            <Button className="mt-3" onClick={() => navigate("/polls/create")}>
+            <Button
+              className="mt-3"
+              onClick={() => navigate("/decisions/create")}
+            >
               Create Decision
             </Button>
           </div>
@@ -127,9 +130,9 @@ const Profile: React.FC = () => {
               <PollCard
                 key={p.id}
                 {...p}
-                onEdit={() => navigate(`/polls/${p.id}/edit`)}
+                onEdit={() => navigate(`/decisions/${p.id}/edit`)}
                 onDelete={() => setDeleteId(p.id)}
-                onViewResults={() => navigate(`/polls/${p.id}/results`)}
+                onViewResults={() => navigate(`/decisions/${p.id}/results`)}
               />
             ))}
           </div>
@@ -157,4 +160,4 @@ const Profile: React.FC = () => {
   );
 };
 
-export default Profile;
+export default Dashboard;

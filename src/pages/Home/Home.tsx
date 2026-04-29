@@ -13,11 +13,11 @@ const Home: React.FC = () => {
 
   const handleCreatePoll = () => {
     if (!user) {
-      navigate("/login?redirect=/polls/create");
+      navigate("/login?redirect=/decisions/create");
       return;
     }
 
-    navigate("/polls/create");
+    navigate("/decisions/create");
   };
 
   const handleJoinPoll = () => {
@@ -30,10 +30,10 @@ const Home: React.FC = () => {
       const pollId = url.pathname.split("/").filter(Boolean).pop();
 
       if (pollId) {
-        navigate(`/polls/${pollId}`);
+        navigate(`/decisions/${pollId}`);
       }
     } catch {
-      navigate(`/polls/${value}`);
+      navigate(`/decisions/${value}`);
     }
   };
 

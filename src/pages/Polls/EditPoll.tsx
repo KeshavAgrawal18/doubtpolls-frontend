@@ -74,7 +74,7 @@ const EditPoll: React.FC = () => {
     if (!id) return;
 
     updatePoll(id, formData);
-    navigate(`/polls/${id}`);
+    navigate(`/decisions/${id}`);
   };
   console.log("polls:", polls);
   console.log("id:", id);

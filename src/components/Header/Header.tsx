@@ -25,7 +25,7 @@ const Header: React.FC = () => {
     <header className="sticky top-0 z-50 border-b bg-background/80 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
         <Link
-          to="/"
+          to={isAuthenticated ? "/dashboard" : "/"}
           onClick={closeMenu}
           className="text-base font-semibold tracking-tight text-foreground transition-opacity hover:opacity-80 sm:text-lg"
         >
@@ -52,10 +52,10 @@ const Header: React.FC = () => {
           {isAuthenticated ? (
             <>
               <NavLink
-                to="/decisions"
+                to="/dashboard"
                 className={`${linkClass} hidden sm:block`}
               >
-                All Decisions
+                Dashboard
               </NavLink>
 
               <Button size="sm" asChild>
@@ -140,11 +140,11 @@ const Header: React.FC = () => {
             ) : (
               <>
                 <Link
-                  to="/decisions"
+                  to="/dashboard"
                   onClick={closeMenu}
                   className={mobileLinkClass}
                 >
-                  All Decisions
+                  Dashboard
                 </Link>
 
                 <Link

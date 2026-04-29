@@ -41,7 +41,7 @@ const VotesList: React.FC<VotesListProps> = ({ votes, isLoading }) => {
         <Card
           key={vote.id}
           className="rounded-2xl cursor-pointer hover:shadow-md transition-all border"
-          onClick={() => navigate(`/polls/${vote.pollId}`)}
+          onClick={() => navigate(`/decisions/${vote.pollId}`)}
         >
           <CardHeader className="pb-2">
             <CardTitle className="text-base font-semibold">
@@ -62,7 +62,7 @@ const VotesList: React.FC<VotesListProps> = ({ votes, isLoading }) => {
               variant="outline"
               onClick={(e) => {
                 e.stopPropagation();
-                navigate(`/polls/${vote.pollId}/results`);
+                navigate(`/decisions/${vote.pollId}/results`);
               }}
             >
               View Results

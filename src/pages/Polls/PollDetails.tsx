@@ -51,7 +51,7 @@ const PollDetailsPage: React.FC = () => {
   };
 
   const votedOption = options.find((o) => o.label === selectedChoice);
-  const shareUrl = `${window.location.origin}/polls/${id}`;
+  const shareUrl = `${window.location.origin}/decisions/${id}`;
 
   if (votesLoading || pollLoading) {
     return (
@@ -93,7 +93,9 @@ const PollDetailsPage: React.FC = () => {
           <PollVoteStatus
             votedOptionLabel={votedOption.label}
             pollId={id}
-            navigateToResults={(pollId) => navigate(`/polls/${pollId}/results`)}
+            navigateToResults={(pollId) =>
+              navigate(`/decisions/${pollId}/results`)
+            }
           />
         )}
 
